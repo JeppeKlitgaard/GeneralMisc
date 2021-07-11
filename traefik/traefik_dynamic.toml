@@ -1,0 +1,10 @@
+[http.routers.api]
+    rule = "Host(`monitor.jeppe.science`)"
+    entrypoints = ["websecure"]
+    middlewares = ["simpleAuth"]
+    service = "api@internal"
+    [http.routers.api.tls]
+        certResolver = "letsencrypt"
+
+[http.middlewares.simpleAuth.basicAuth]
+    usersFile = "/usersfile.txt"
