@@ -1,0 +1,10 @@
+#!/bin/fish
+
+# set -a configs "-f" $HOME"/jeppe.science/docker-compose.yml"
+
+
+docker-compose -f $HOME/"GeneralMisc/docker-compose.yml" up -d
+
+docker-compose -f $HOME/"jeppe.science/docker-compose.yml" up -d
+
+
