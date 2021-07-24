@@ -3,3 +3,6 @@ acme.json
 
 # Traefik
 usersfile.txt
+
+# Virtualenv
+.venv/
