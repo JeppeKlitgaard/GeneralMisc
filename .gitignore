@@ -6,3 +6,6 @@ usersfile.txt
 
 # Virtualenv
 .venv/
+
+# General
+*.override.env

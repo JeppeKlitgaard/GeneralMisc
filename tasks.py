@@ -5,6 +5,7 @@ from enum import Enum
 
 
 HOME = Path.home()
+GENERAL_MISC = HOME / "GeneralMisc"
 
 class Direction(str, Enum):
     UP = "up"
@@ -29,7 +30,12 @@ def _construct_compose(compose_files: List[str], direction: Direction, detached:
 def _updown(c, direction: Direction):
     assert direction in Direction._value2member_map_
 
-    cmd = _construct_compose([HOME / "GeneralMisc" / "docker-compose.yml"], direction, True)
+    # Traefik
+    cmd = _construct_compose([GENERAL_MISC / "traefik" / "docker-compose.yml"], direction, True)
+    c.run(cmd)
+
+    # Tiny Tiny RSS
+    cmd = _construct_compose([GENERAL_MISC / "ttrss" / "docker-compose.yml"], direction, True)
     c.run(cmd)
 
     with c.cd(HOME / "jeppe.science"):

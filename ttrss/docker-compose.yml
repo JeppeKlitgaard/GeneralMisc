@@ -1,0 +1,114 @@
+version: "3"
+services:
+    ttrss:
+        image: wangqiru/ttrss:latest
+        container_name: ttrss
+        hostname: ttrss
+        ports:
+            - 181:80
+        environment:
+            - SELF_URL_PATH=https://rss.jeppe.science # please change to your own domain
+            - DB_HOST=ttrss_postgres
+            - DB_PASS=ttrss # use the same password defined in `database.postgres`
+            - PUID=1000
+            - PGID=1000
+        volumes:
+            - feed-icons:/var/www/feed-icons/
+        networks:
+            - web
+            - service_only
+            - database_only
+        stdin_open: true
+        tty: true
+        restart: always
+
+        labels:
+            traefik.enable: "true"
+
+            traefik.http.routers.rss.rule: "Host(`rss.jeppe.science`)"
+            traefik.http.routers.rss.entrypoints: "websecure"
+            traefik.http.routers.rss.tls.certresolver: "letsencrypt"
+
+    ttrss_mercury: # set Mercury Parser API endpoint to `ttrss_mercury:3000` on TTRSS plugin setting page
+        image: wangqiru/mercury-parser-api:latest
+        container_name: ttrss_mercury
+        hostname: ttrss_mercury
+        networks:
+            - web
+            - service_only
+        restart: always
+
+        environment:
+            - PUID=1000
+            - PGID=1000
+
+    # service.opencc: # set OpenCC API endpoint to `ttrss_opencc:3000` on TTRSS plugin setting page
+    #   image: wangqiru/opencc-api-server:latest
+    #   container_name: ttrss_opencc
+    #   hostname: ttrss_opencc
+    #   environment:
+    #     - NODE_ENV=production
+    #   networks:
+    #     - service_only
+    #   restart: always
+
+    ttrss_postgres:
+        image: postgres:13-alpine
+        container_name: ttrss_postgres
+        hostname: ttrss_postgres
+        environment:
+            - POSTGRES_PASSWORD=ttrss # feel free to change the password
+            - PUID=1000
+            - PGID=1000
+        volumes:
+            - ~/postgres/data/:/var/lib/postgresql/data # persist postgres data to ~/postgres/data/ on the host
+        networks:
+            - database_only
+        restart: always
+
+    ttrss_rss_bridge:
+        image: rssbridge/rss-bridge:latest
+        container_name: ttrss_rss_bridge
+        hostname: ttrss_rss_bridge
+        restart: unless-stopped
+
+        ports:
+            - 3000:80
+        volumes:
+            - ./rss_bridge/whitelist.txt:/app/whitelist.txt
+            - ./rss_bridge/config.ini.php:/app/config.ini.php
+        environment:
+            - PUID=1000
+            - PGID=1000
+
+        networks:
+            - service_only
+            - web
+
+        labels:
+            traefik.enable: "true"
+
+            traefik.http.routers.rss_bridge.rule: "Host(`rssbridge.jeppe.science`)"
+            traefik.http.routers.rss_bridge.entrypoints: "websecure"
+            traefik.http.routers.rss_bridge.tls.certresolver: "letsencrypt"
+
+    # utility.watchtower:
+    #   container_name: watchtower
+    #   image: containrrr/watchtower:latest
+    #   volumes:
+    #     - /var/run/docker.sock:/var/run/docker.sock
+    #   environment:
+    #     - WATCHTOWER_CLEANUP=true
+    #     - WATCHTOWER_POLL_INTERVAL=86400
+    #   restart: always
+
+volumes:
+    feed-icons:
+
+networks:
+    web:
+        external: true
+    service_only: # Provide the communication network between services only
+        internal: true
+    database_only: # Provide the communication between ttrss and database only
+        internal: true
