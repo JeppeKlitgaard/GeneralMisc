@@ -34,7 +34,6 @@ services:
     container_name: ttrss_mercury
     hostname: ttrss_mercury
     networks:
-      - web
       - service_only
     restart: always
 

@@ -1,0 +1,97 @@
+version: "3"
+services:
+  wallabag:
+    image: wallabag/wallabag
+    container_name: wallabag
+    hostname: wallabag
+
+    environment:
+      - SYMFONY__ENV__DOMAIN_NAME=https://read.jeppe.science
+      - SYMFONY__ENV__SERVER_NAME="Jeppe's Wallabag"
+
+      - SYMFONY__ENV__DATABASE_DRIVER=pdo_pgsql
+      - SYMFONY__ENV__DATABASE_DRIVER_CLASS="Wallabag\CoreBundle\Doctrine\DBAL\Driver\CustomPostgreSQLDriver"
+      - SYMFONY__ENV__DATABASE_HOST=wallabag_db
+      - SYMFONY__ENV__DATABASE_PORT=5432
+      - SYMFONY__ENV__DATABASE_NAME=wallabag
+      - SYMFONY__ENV__DATABASE_USER=wallabag
+      - SYMFONY__ENV__DATABASE_PASSWORD=wallapass
+
+      - SYMFONY__ENV__MAILER_HOST=127.0.0.1
+      - SYMFONY__ENV__MAILER_USER=~
+      - SYMFONY__ENV__MAILER_PASSWORD=~
+      - SYMFONY__ENV__FROM_EMAIL=wallabag@jeppe.science
+
+      - SYMFONY__ENV__REDIS_HOST=wallabag_redis
+
+      - WALLABAG_HOSTNAME=read.jeppe.science
+      - WALLABAG_URL=https://read.jeppe.science
+
+      - POPULATE_DATABASE="False"
+
+      - PUID=1000
+      - PGID=1000
+
+    ports:
+      - 80
+
+    volumes:
+      - ./volumes/wallabag/data:/var/www/wallabag/data
+      - ./volumes/wallabag/images:/var/www/wallabag/web/assets/images
+
+    healthcheck:
+      test: ["CMD", "wget" ,"--no-verbose", "--tries=1", "--spider", "http://localhost"]
+      interval: 1m
+      timeout: 3s
+
+    depends_on:
+      - wallabag_db
+      - wallabag_redis
+
+    networks:
+      - default
+      - web
+
+    labels:
+      traefik.enable: "true"
+
+      traefik.http.routers.wallabag.rule: "Host(`read.jeppe.science`)"
+      traefik.http.routers.wallabag.entrypoints: "websecure"
+      traefik.http.routers.wallabag.tls.certresolver: "letsencrypt"
+
+  wallabag_db:
+    image: postgres:13-alpine
+    container_name: wallabag_db
+    hostname: wallabag_db
+
+    environment:
+      - POSTGRES_USER=wallabag
+      - POSTGRES_PASSWORD=wallapass
+
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./volumes/pgsql/data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 3s
+
+  wallabag_redis:
+    image: redis:alpine
+    container_name: wallabag_redis
+    hostname: wallabag_redis
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 20s
+      timeout: 3s
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+
+networks:
+  web:
+    external: true

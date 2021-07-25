@@ -9,3 +9,6 @@ usersfile.txt
 
 # General
 *.override.env
+
+# Wallabag
+wallabag/volumes

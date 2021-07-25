@@ -38,6 +38,13 @@ def _updown(c, direction: Direction):
     cmd = _construct_compose([GENERAL_MISC / "ttrss" / "docker-compose.yml"], direction, True)
     c.run(cmd)
 
+    # Wallabag
+    cmd = _construct_compose([GENERAL_MISC / "wallabag" / "docker-compose.yml"], direction, True)
+    c.run(cmd)
+
+    # jeppe.science website:
+    # - remark42 comments
+    # - plausible analytics
     with c.cd(HOME / "jeppe.science"):
         c.run("./" + direction)
 
