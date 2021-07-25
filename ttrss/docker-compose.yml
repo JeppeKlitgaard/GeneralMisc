@@ -35,11 +35,19 @@ services:
     hostname: ttrss_mercury
     networks:
       - service_only
+      - web
     restart: always
 
     environment:
       - PUID=1000
       - PGID=1000
+
+    labels:
+      traefik.enable: "true"
+
+      traefik.http.routers.rss_mercury.rule: "Host(`rssmercury.jeppe.science`)"
+      traefik.http.routers.rss_mercury.entrypoints: "websecure"
+      traefik.http.routers.rss_mercury.tls.certresolver: "letsencrypt"
 
   # service.opencc: # set OpenCC API endpoint to `ttrss_opencc:3000` on TTRSS plugin setting page
   #   image: wangqiru/opencc-api-server:latest
