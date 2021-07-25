@@ -29,7 +29,7 @@ services:
       traefik.http.routers.rss.entrypoints: "websecure"
       traefik.http.routers.rss.tls.certresolver: "letsencrypt"
 
-  ttrss_mercury: # set Mercury Parser API endpoint to `ttrss_mercury:3000` on TTRSS plugin setting page
+  ttrss_mercury: # set Mercury Parser API endpoint to `https://rssmercury.jeppe.science:443` on TTRSS plugin setting page
     image: wangqiru/mercury-parser-api:latest
     container_name: ttrss_mercury
     hostname: ttrss_mercury
