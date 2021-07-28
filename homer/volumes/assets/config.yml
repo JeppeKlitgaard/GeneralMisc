@@ -8,7 +8,7 @@ logo: "logo.png"
 # icon: "fas fa-skull-crossbones" # Optional icon
 
 header: true
-footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
+footer: false
 
 # Optional theme customization
 theme: default
@@ -64,20 +64,20 @@ services:
       - name: "Tiny Tiny RSS"
         logo: "assets/webapps/ttrss.png"
         subtitle: "📰 News and stuff"
-        tag: "webapp"
+        tag: "app"
         url: "https://rss.jeppe.science/"
         # target: "_blank" # optional html a tag target attribute
 
       - name: "RSS Bridge"
         logo: "assets/webapps/rssbridge.png"
         subtitle: "🌉 For setting up RSS feeds on other sources"
-        tag: "webapp"
+        tag: "app"
         url: "https://rssbridge.jeppe.science/"
 
       - name: "Wallabag"
         logo: "assets/webapps/wallabag.png"
         subtitle: "📚 For catching up on read stuff"
-        tag: "webapp"
+        tag: "app"
         url: "https://read.jeppe.science/"
 
   - name: "Sys Admin"
@@ -86,7 +86,7 @@ services:
       - name: "Traefik"
         logo: "assets/webapps/traefik.svg"
         subtitle: "🚧 For building routes"
-        tag: "webapp"
+        tag: "app"
         url: "https://traefik.jeppe.science/"
 
   - name: "Website"
@@ -95,18 +95,23 @@ services:
       - name: "Website"
         logo: "assets/websites/jeppe_science.png"
         subtitle: "🕸 My personal website"
-        tag: "website"
+        tag: "site"
         url: "https://jeppe.science/"
 
       - name: "Plausible"
         logo: "assets/webapps/plausible.png"
         subtitle: "📈 For analysing visits"
-        tag: "webapp"
+        tag: "app"
         url: "https://analytics.jeppe.science/jeppe.science"
 
       - name: "Remark42"
         logo: "assets/webapps/remark42.png"
         subtitle: "💬 For comments and debate"
-        tag: "webapp"
+        tag: "app"
         url: "https://comments.jeppe.science/web/"
 
+      - name: "Google Search"
+        logo: "assets/websites/google_search_console.png"
+        subtitle: "📊 For seeing search rank"
+        tag: "site"
+        url: "https://search.google.com/u/1/search-console/performance/search-analytics?resource_id=sc-domain%3Ajeppe.science"
