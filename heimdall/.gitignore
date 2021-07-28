@@ -1,7 +1,0 @@
-config/custom-cont-init.d/
-config/custom-services.d/
-config/keys/
-config/log/
-config/nginx/
-
-config/www/
