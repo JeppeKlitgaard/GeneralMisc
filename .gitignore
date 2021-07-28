@@ -12,3 +12,10 @@ usersfile.txt
 
 # Wallabag
 wallabag/volumes
+
+# Homer
+homer/volumes/assets/icons
+homer/volumes/assets/tools
+homer/volumes/assets/*.dist
+homer/volumes/assets/*.sample*
+homer/volumes/assets/manifest.json

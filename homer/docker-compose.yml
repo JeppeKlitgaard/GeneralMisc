@@ -1,0 +1,34 @@
+version: "3"
+services:
+  homer:
+    image: b4bz/homer
+    #To build from source, comment previous line and uncomment below
+    #build: .
+    container_name: homer
+    hostname: homer
+
+    restart: unless-stopped
+
+    volumes:
+    - ./volumes/assets/:/www/assets
+
+    ports:
+    - 8080
+
+    networks:
+      - web
+
+    environment:
+    - UID=1000
+    - GID=1000
+
+    labels:
+      traefik.enable: "true"
+
+      traefik.http.routers.homer.rule: "Host(`home.jeppe.science`)"
+      traefik.http.routers.homer.entrypoints: "websecure"
+      traefik.http.routers.homer.tls.certresolver: "letsencrypt"
+
+networks:
+  web:
+    external: true

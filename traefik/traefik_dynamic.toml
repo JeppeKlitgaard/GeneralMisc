@@ -1,5 +1,5 @@
 [http.routers.api]
-    rule = "Host(`monitor.jeppe.science`)"
+    rule = "Host(`traefik.jeppe.science`)"
     entrypoints = ["websecure"]
     middlewares = ["simpleAuth"]
     service = "api@internal"
