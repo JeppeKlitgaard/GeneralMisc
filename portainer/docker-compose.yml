@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  portainer:
+    container_name: portainer
+    hostname: portainer
+
+    image: portainer/portainer-ce:2.6.3-alpine
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+    networks:
+      - default
+      - web
+
+    labels:
+      traefik.enable: "true"
+
+      # Frontend
+      traefik.http.routers.portainer.rule: "Host(`portainer.jeppe.science`)"
+      traefik.http.routers.portainer.entrypoints: "websecure"
+      traefik.http.routers.portainer.tls.certresolver: "letsencrypt"
+      traefik.http.services.portainer.loadbalancer.server.port: 9000
+      traefik.http.routers.portainer.service: portainer
+
+      # Edge
+      traefik.http.routers.edge.rule: "Host(`edge.jeppe.science`)"
+      traefik.http.routers.edge.entrypoints: "websecure"
+      traefik.http.routers.edge.tls.certresolver: "letsencrypt"
+      traefik.http.services.edge.loadbalancer.server.port: 8000
+      traefik.http.routers.edge.service: edge
+
+volumes:
+  portainer_data:
+
+networks:
+  web:
+    external: true

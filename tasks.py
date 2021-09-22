@@ -34,6 +34,10 @@ def _updown(c, direction: Direction):
     cmd = _construct_compose([GENERAL_MISC / "traefik" / "docker-compose.yml"], direction, True)
     c.run(cmd)
 
+    # Portainer
+    cmd = _construct_compose([GENERAL_MISC / "portainer" / "docker-compose.yml"], direction, True)
+    c.run(cmd)
+
     # Tiny Tiny RSS
     cmd = _construct_compose([GENERAL_MISC / "ttrss" / "docker-compose.yml"], direction, True)
     c.run(cmd)
