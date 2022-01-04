@@ -22,5 +22,5 @@
         certResolver = "letsencrypt"
 
 [http.middlewares.redirect-hygge.redirectRegex]
-    regex = "^https://hygge.jeppe.science"
-    replacement = "https://military-grouse-bfd.notion.site/HYGGE-2022-1271060a98af4822b1bf894a685b8b91"
+    regex = "^https?://hygge.jeppe.science"
+    replacement = "https://jeppeklitgaard.notion.site/HYGGE-2022-1271060a98af4822b1bf894a685b8b91"
