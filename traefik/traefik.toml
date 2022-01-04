@@ -26,6 +26,7 @@
 [providers.docker]
     network = "web"
     watch = true
+    exposedByDefault = false
 
 
 [providers.file]
@@ -34,3 +35,4 @@
 
 [log]
 # level = "DEBUG"
+level = "WARNING"

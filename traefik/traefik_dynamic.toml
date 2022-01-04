@@ -8,3 +8,19 @@
 
 [http.middlewares.simpleAuth.basicAuth]
     usersFile = "/usersfile.txt"
+
+### Redirects
+
+# Hygge
+[http.routers.hygge]
+    rule = "Host(`hygge.jeppe.science`)"
+    entrypoints = ["websecure"]
+    middlewares = ["redirect-hygge"]
+    service = "noop@internal"
+
+    [http.routers.hygge.tls]
+        certResolver = "letsencrypt"
+
+[http.middlewares.redirect-hygge.redirectRegex]
+    regex = "^https://hygge.jeppe.science"
+    replacement = "https://military-grouse-bfd.notion.site/HYGGE-2022-1271060a98af4822b1bf894a685b8b91"

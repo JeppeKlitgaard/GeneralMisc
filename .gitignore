@@ -19,3 +19,7 @@ homer/volumes/assets/tools
 homer/volumes/assets/*.dist
 homer/volumes/assets/*.sample*
 homer/volumes/assets/manifest.json
+
+# Homeassistant
+homeassistant/volumes/homeassistant/config/*
+!homeassistant/volumes/homeassistant/config/*.yaml

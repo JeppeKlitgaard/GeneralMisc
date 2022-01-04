@@ -117,5 +117,6 @@ networks:
     external: true
   service_only: # Provide the communication network between services only
     internal: true
+
   database_only: # Provide the communication between ttrss and database only
     internal: true
