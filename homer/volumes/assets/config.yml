@@ -41,18 +41,10 @@ colors:
 # Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
 links:
-  - name: "Contribute"
+  - name: "GitHub"
     icon: "fab fa-github"
-    url: "https://github.com/bastienwirtz/homer"
+    url: "https://github.com/JeppeKlitgaard"
     target: "_blank" # optional html a tag target attribute
-  - name: "Wiki"
-    icon: "fas fa-book"
-    url: "https://www.wikipedia.org/"
-  # this will link to a second homer page that will load config from additionnal-page.yml and keep default config values as in config.yml file
-  # see url field and assets/additionnal-page.yml.dist used in this example:
-  - name: "another page!"
-    icon: "fas fa-file-alt"
-    url: "#additionnal-page"
 
 # Services
 # First level array represent a group.
@@ -89,6 +81,12 @@ services:
         tag: "app"
         url: "https://traefik.jeppe.science/"
 
+      - name: "Portainer"
+        logo: "assets/webapps/portainer.svg"
+        subtitle: "🔎 Monitoring containers"
+        tag: "app"
+        url: "https://portainer.jeppe.science/"
+
   - name: "Website"
     icon: "fas fa-comment-dots"
     items:
@@ -98,11 +96,17 @@ services:
         tag: "site"
         url: "https://jeppe.science/"
 
-      - name: "Plausible"
-        logo: "assets/webapps/plausible.png"
+      - name: "Netlify"
+        logo: "assets/websites/netlify.svg"
+        subtitle: "🔌 Deployment"
+        tag: "site"
+        url: "https://app.netlify.com/teams/jeppeklitgaard/overview"
+
+      - name: "Umami"
+        logo: "assets/webapps/umami.svg"
         subtitle: "📈 For analysing visits"
         tag: "app"
-        url: "https://analytics.jeppe.science/jeppe.science"
+        url: "https://analytics.jeppe.science/website/1/jeppe.science"
 
       - name: "Remark42"
         logo: "assets/webapps/remark42.png"
