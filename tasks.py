@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import List
 from enum import Enum
 
-
 HOME = Path.home()
 GENERAL_MISC = HOME / "GeneralMisc"
 
@@ -52,9 +51,9 @@ def _updown(c, direction: Direction):
 
     # jeppe.science website:
     # - remark42 comments
-    # - plausible analytics
+    # - umami analytics
     with c.cd(HOME / "jeppe.science"):
-        c.run("./" + direction)
+        c.run(f"./run_docker prod {direction}")
 
 @task
 def up(c):
